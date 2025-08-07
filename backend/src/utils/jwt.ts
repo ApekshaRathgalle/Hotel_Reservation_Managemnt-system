@@ -20,7 +20,7 @@ export const generateToken = (payload: TokenPayload): string => {
   const JWT_SECRET = getJWTSecret();
   return jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXPIRE,
-  });
+  } as any);
 };
 
 export const verifyToken = (token: string): TokenPayload => {

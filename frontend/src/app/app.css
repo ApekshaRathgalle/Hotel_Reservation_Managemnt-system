@@ -1,0 +1,106 @@
+/* Hotel Management System Global Styles */
+
+:host {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom button styles */
+.btn-primary {
+  background-color: #1e40af;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #111827;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-gold {
+  background-color: #d4af37;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-gold:hover {
+  background-color: #b8941f;
+}
+
+/* Card styles */
+.card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6;
+  overflow: hidden;
+}
+
+/* Gold gradient background */
+.gold-gradient {
+  background: linear-gradient(135deg, #d4af37 0%, #f1c40f 50%, #d4af37 100%);
+}
+
+/* Primary colors for the hotel theme */
+.text-primary-600 {
+  color: #1e40af;
+}
+
+.bg-primary-600 {
+  background-color: #1e40af;
+}
+
+.text-gold-600 {
+  color: #d4af37;
+}
+
+.bg-gold-600 {
+  background-color: #d4af37;
+}
+
+.text-gold-500 {
+  color: #eab308;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  height: 2rem;
+  width: 2rem;
+  color: #1e40af;
+}
