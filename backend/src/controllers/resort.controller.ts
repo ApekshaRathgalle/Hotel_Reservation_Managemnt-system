@@ -3,7 +3,10 @@ import { Resort } from '../models/resort.model';
 
 export const getResorts = async (req: Request, res: Response) => {
   try {
-    const resorts = await Resort.find().sort({ createdAt: -1 });
+    const resorts = await Resort.find()
+      .select('-__v') // Exclude version field
+      .sort({ createdAt: -1 })
+      .lean(); // Return plain JavaScript objects for better performance
     res.json({ success: true, data: resorts });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -12,7 +15,7 @@ export const getResorts = async (req: Request, res: Response) => {
 
 export const getResort = async (req: Request, res: Response) => {
   try {
-    const resort = await Resort.findById(req.params.id);
+    const resort = await Resort.findById(req.params.id).select('-__v').lean();
     if (!resort) {
       return res.status(404).json({ message: 'Resort not found' });
     }

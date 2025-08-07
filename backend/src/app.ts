@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 
 import authRoutes from './routes/auth.routes';
@@ -18,6 +19,7 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
+app.use(compression()); // Add compression for faster data transfer
 app.use(cors({
   origin: process.env['FRONTEND_URL'] || 'http://localhost:4200',
   credentials: true
@@ -26,7 +28,9 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: process.env.NODE_ENV === 'development' ? 1000 : 100, // More lenient for development
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use(limiter);
 

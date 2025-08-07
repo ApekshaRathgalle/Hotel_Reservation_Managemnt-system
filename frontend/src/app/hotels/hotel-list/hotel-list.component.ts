@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../../shared/services/api.service';
+import { PerformanceService } from '../../shared/services/performance.service';
 import { Hotel } from '../../shared/models/property.model';
 
 @Component({
@@ -117,21 +118,40 @@ export class HotelListComponent implements OnInit {
   hotels: Hotel[] = [];
   loading = true;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private performanceService: PerformanceService
+  ) {}
 
   ngOnInit(): void {
     this.loadHotels();
   }
 
   loadHotels(): void {
+    this.loading = true;
+    const stopTimer = this.performanceService.startTimer('Load Hotels');
+    
+    // Set a timeout to prevent indefinite loading
+    const timeoutId = setTimeout(() => {
+      if (this.loading) {
+        console.warn('Hotel loading timeout - taking longer than expected');
+      }
+    }, 10000); // 10 second timeout warning
+
     this.apiService.get<{success: boolean, data: Hotel[]}>('/hotels').subscribe({
       next: (response) => {
+        clearTimeout(timeoutId);
+        stopTimer();
         this.hotels = response.data;
         this.loading = false;
+        console.log(`✅ Loaded ${this.hotels.length} hotels successfully`);
       },
       error: (error) => {
-        console.error('Error loading hotels:', error);
+        clearTimeout(timeoutId);
+        stopTimer();
+        console.error('❌ Error loading hotels:', error);
         this.loading = false;
+        // Could add a toast notification here
       }
     });
   }

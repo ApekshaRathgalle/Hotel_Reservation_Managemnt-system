@@ -1,0 +1,36 @@
+{
+  "name": "hotel_reservation_managemnt-system",
+  "version": "1.0.0",
+  "description": "Hotel Reservation Management System - Full Stack Application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "start": "cd backend && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApekshaRathgalle/Hotel_Reservation_Managemnt-system.git"
+  },
+  "keywords": [
+    "hotel",
+    "reservation",
+    "management",
+    "angular",
+    "express",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ApekshaRathgalle/Hotel_Reservation_Managemnt-system/issues"
+  },
+  "homepage": "https://github.com/ApekshaRathgalle/Hotel_Reservation_Managemnt-system#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

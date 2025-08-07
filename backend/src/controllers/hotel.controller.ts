@@ -3,7 +3,10 @@ import { Hotel } from '../models/hotel.model';
 
 export const getHotels = async (req: Request, res: Response) => {
   try {
-    const hotels = await Hotel.find().sort({ createdAt: -1 });
+    const hotels = await Hotel.find()
+      .select('-__v') // Exclude version field
+      .sort({ createdAt: -1 })
+      .lean(); // Return plain JavaScript objects for better performance
     res.json({ success: true, data: hotels });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -12,7 +15,7 @@ export const getHotels = async (req: Request, res: Response) => {
 
 export const getHotel = async (req: Request, res: Response) => {
   try {
-    const hotel = await Hotel.findById(req.params.id);
+    const hotel = await Hotel.findById(req.params.id).select('-__v').lean();
     if (!hotel) {
       return res.status(404).json({ message: 'Hotel not found' });
     }

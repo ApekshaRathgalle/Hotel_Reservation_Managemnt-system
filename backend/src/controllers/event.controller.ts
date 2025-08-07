@@ -3,7 +3,10 @@ import { Event } from '../models/event.model';
 
 export const getEvents = async (req: Request, res: Response) => {
   try {
-    const events = await Event.find().sort({ date: 1 });
+    const events = await Event.find()
+      .select('-__v') // Exclude version field
+      .sort({ date: 1 })
+      .lean(); // Return plain JavaScript objects for better performance
     res.json({ success: true, data: events });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -12,7 +15,7 @@ export const getEvents = async (req: Request, res: Response) => {
 
 export const getEvent = async (req: Request, res: Response) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id).select('-__v').lean();
     if (!event) {
       return res.status(404).json({ message: 'Event not found' });
     }

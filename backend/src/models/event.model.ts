@@ -40,4 +40,10 @@ const eventSchema = new Schema<IEvent>({
   timestamps: true
 });
 
+// Add indexes for better query performance
+eventSchema.index({ date: 1 });
+eventSchema.index({ category: 1 });
+eventSchema.index({ location: 1 });
+eventSchema.index({ createdAt: -1 });
+
 export const Event = model<IEvent>('Event', eventSchema);

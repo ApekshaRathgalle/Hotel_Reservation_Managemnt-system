@@ -41,4 +41,10 @@ const hotelSchema = new Schema<IHotel>({
   timestamps: true
 });
 
+// Add indexes for better query performance
+hotelSchema.index({ createdAt: -1 });
+hotelSchema.index({ location: 1 });
+hotelSchema.index({ pricePerNight: 1 });
+hotelSchema.index({ rating: -1 });
+
 export const Hotel = model<IHotel>('Hotel', hotelSchema);
