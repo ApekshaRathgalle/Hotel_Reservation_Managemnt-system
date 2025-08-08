@@ -4,7 +4,10 @@ exports.deleteResort = exports.updateResort = exports.createResort = exports.get
 const resort_model_1 = require("../models/resort.model");
 const getResorts = async (req, res) => {
     try {
-        const resorts = await resort_model_1.Resort.find().sort({ createdAt: -1 });
+        const resorts = await resort_model_1.Resort.find()
+            .select('-__v')
+            .sort({ createdAt: -1 })
+            .lean();
         res.json({ success: true, data: resorts });
     }
     catch (error) {
@@ -14,7 +17,7 @@ const getResorts = async (req, res) => {
 exports.getResorts = getResorts;
 const getResort = async (req, res) => {
     try {
-        const resort = await resort_model_1.Resort.findById(req.params.id);
+        const resort = await resort_model_1.Resort.findById(req.params.id).select('-__v').lean();
         if (!resort) {
             return res.status(404).json({ message: 'Resort not found' });
         }

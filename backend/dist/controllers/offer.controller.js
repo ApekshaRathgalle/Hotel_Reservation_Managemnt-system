@@ -8,7 +8,10 @@ const getOffers = async (req, res) => {
         const offers = await offer_model_1.Offer.find({
             validFrom: { $lte: currentDate },
             validTo: { $gte: currentDate }
-        }).sort({ createdAt: -1 });
+        })
+            .select('-__v')
+            .sort({ createdAt: -1 })
+            .lean();
         res.json({ success: true, data: offers });
     }
     catch (error) {
@@ -18,7 +21,10 @@ const getOffers = async (req, res) => {
 exports.getOffers = getOffers;
 const getAllOffers = async (req, res) => {
     try {
-        const offers = await offer_model_1.Offer.find().sort({ createdAt: -1 });
+        const offers = await offer_model_1.Offer.find()
+            .select('-__v')
+            .sort({ createdAt: -1 })
+            .lean();
         res.json({ success: true, data: offers });
     }
     catch (error) {
@@ -28,7 +34,7 @@ const getAllOffers = async (req, res) => {
 exports.getAllOffers = getAllOffers;
 const getOffer = async (req, res) => {
     try {
-        const offer = await offer_model_1.Offer.findById(req.params.id);
+        const offer = await offer_model_1.Offer.findById(req.params.id).select('-__v').lean();
         if (!offer) {
             return res.status(404).json({ message: 'Offer not found' });
         }

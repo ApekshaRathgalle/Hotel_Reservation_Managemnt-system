@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
+const compression_1 = __importDefault(require("compression"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
@@ -18,13 +19,16 @@ const booking_routes_1 = __importDefault(require("./routes/booking.routes"));
 const error_middleware_1 = require("./middlewares/error.middleware");
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
+app.use((0, compression_1.default)());
 app.use((0, cors_1.default)({
     origin: process.env['FRONTEND_URL'] || 'http://localhost:4200',
     credentials: true
 }));
 const limiter = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
-    max: 100
+    max: process.env.NODE_ENV === 'development' ? 1000 : 100,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 app.use(limiter);
 app.use(express_1.default.json({ limit: '10mb' }));

@@ -4,7 +4,10 @@ exports.deleteHotel = exports.updateHotel = exports.createHotel = exports.getHot
 const hotel_model_1 = require("../models/hotel.model");
 const getHotels = async (req, res) => {
     try {
-        const hotels = await hotel_model_1.Hotel.find().sort({ createdAt: -1 });
+        const hotels = await hotel_model_1.Hotel.find()
+            .select('-__v')
+            .sort({ createdAt: -1 })
+            .lean();
         res.json({ success: true, data: hotels });
     }
     catch (error) {
@@ -14,7 +17,7 @@ const getHotels = async (req, res) => {
 exports.getHotels = getHotels;
 const getHotel = async (req, res) => {
     try {
-        const hotel = await hotel_model_1.Hotel.findById(req.params.id);
+        const hotel = await hotel_model_1.Hotel.findById(req.params.id).select('-__v').lean();
         if (!hotel) {
             return res.status(404).json({ message: 'Hotel not found' });
         }

@@ -4,7 +4,10 @@ exports.deleteEvent = exports.updateEvent = exports.createEvent = exports.getEve
 const event_model_1 = require("../models/event.model");
 const getEvents = async (req, res) => {
     try {
-        const events = await event_model_1.Event.find().sort({ date: 1 });
+        const events = await event_model_1.Event.find()
+            .select('-__v')
+            .sort({ date: 1 })
+            .lean();
         res.json({ success: true, data: events });
     }
     catch (error) {
@@ -14,7 +17,7 @@ const getEvents = async (req, res) => {
 exports.getEvents = getEvents;
 const getEvent = async (req, res) => {
     try {
-        const event = await event_model_1.Event.findById(req.params.id);
+        const event = await event_model_1.Event.findById(req.params.id).select('-__v').lean();
         if (!event) {
             return res.status(404).json({ message: 'Event not found' });
         }

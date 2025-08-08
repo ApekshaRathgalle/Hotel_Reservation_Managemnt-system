@@ -4,7 +4,10 @@ exports.deleteWeddingHall = exports.updateWeddingHall = exports.createWeddingHal
 const wedding_model_1 = require("../models/wedding.model");
 const getWeddingHalls = async (req, res) => {
     try {
-        const halls = await wedding_model_1.WeddingHall.find().sort({ createdAt: -1 });
+        const halls = await wedding_model_1.WeddingHall.find()
+            .select('-__v')
+            .sort({ createdAt: -1 })
+            .lean();
         res.json({ success: true, data: halls });
     }
     catch (error) {
@@ -14,7 +17,7 @@ const getWeddingHalls = async (req, res) => {
 exports.getWeddingHalls = getWeddingHalls;
 const getWeddingHall = async (req, res) => {
     try {
-        const hall = await wedding_model_1.WeddingHall.findById(req.params['id']);
+        const hall = await wedding_model_1.WeddingHall.findById(req.params['id']).select('-__v').lean();
         if (!hall) {
             return res.status(404).json({ message: 'Wedding hall not found' });
         }

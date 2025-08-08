@@ -41,5 +41,9 @@ const hotelSchema = new mongoose_1.Schema({
 }, {
     timestamps: true
 });
+hotelSchema.index({ createdAt: -1 });
+hotelSchema.index({ location: 1 });
+hotelSchema.index({ pricePerNight: 1 });
+hotelSchema.index({ rating: -1 });
 exports.Hotel = (0, mongoose_1.model)('Hotel', hotelSchema);
 //# sourceMappingURL=hotel.model.js.map

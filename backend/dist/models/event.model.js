@@ -40,5 +40,9 @@ const eventSchema = new mongoose_1.Schema({
 }, {
     timestamps: true
 });
+eventSchema.index({ date: 1 });
+eventSchema.index({ category: 1 });
+eventSchema.index({ location: 1 });
+eventSchema.index({ createdAt: -1 });
 exports.Event = (0, mongoose_1.model)('Event', eventSchema);
 //# sourceMappingURL=event.model.js.map
